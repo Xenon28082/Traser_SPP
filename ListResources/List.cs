@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TracerResources
 {
@@ -7,11 +8,14 @@ namespace TracerResources
         public Node startNode;
         public Node currentNode;
         public int size;
+
+        public HashSet<String> parentNames;
         public void print() {
             Node node = startNode;
             while (node != null) {
                 Console.WriteLine("Time - " + node.result.time);
                 Console.WriteLine("Method - " + node.result.methodName);
+                Console.WriteLine("Parent Method - " + node.result.parentName);
                 Console.WriteLine("Class - " + node.result.className);
                 node = node.next;
                 Console.WriteLine("\n");
@@ -33,7 +37,6 @@ namespace TracerResources
 
             size++;
             currentNode.next = node;
-            node.prev = currentNode;
             currentNode = node;
         }
         

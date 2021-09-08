@@ -6,12 +6,12 @@ namespace TracerResources
     {
         public TraceRes result;
         public Node next;
-        public Node prev;
+        public Node right;
         public Node()
         {
             this.result = null;
             this.next = null;
-            this.prev = null;
+            this.right = null;
         }
     }
 }

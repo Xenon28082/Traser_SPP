@@ -20,6 +20,14 @@ namespace TracerResources
             MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
             list.currentNode.result.methodName = methodBase.Name;
             list.currentNode.result.className = methodBase.ReflectedType.Name;
+            try
+            {
+                list.currentNode.result.parentName = stackTrace.GetFrame(2).GetMethod().Name;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("It's main; there is no parent method");
+            }
             frame.className = methodBase.ReflectedType.Name;
             frame.methName = methodBase.Name;
             stack.Push(frame);
@@ -53,5 +61,11 @@ namespace TracerResources
         {
             // list.currentNode.result.time = (DateTime.Now - list.currentNode.result.start).TotalMilliseconds;
         }
+
+        public void ordinate()
+        {
+            
+        }
+        
     }
 }
