@@ -15,13 +15,10 @@ namespace TracerResources
         public List list = new List();
         public List threadList = new List();
 
-        [XmlIgnore]
-        private Stack<StackFrame> stack = new Stack<StackFrame>();
-        [XmlIgnore]
-        private HashSet<int> set = new HashSet<int>();
-        [XmlIgnore]
-        private StackFrame frame;
-        
+        [XmlIgnore] private Stack<StackFrame> stack = new Stack<StackFrame>();
+        [XmlIgnore] private HashSet<int> set = new HashSet<int>();
+        [XmlIgnore] private StackFrame frame;
+
         public void StartTrace()
         {
             list.Insert(new TraceRes());
@@ -42,7 +39,7 @@ namespace TracerResources
             frame.className = methodBase.ReflectedType.Name;
             frame.methName = methodBase.Name;
             stack.Push(frame);
-            
+
             if (!set.Contains(list.currentNode.result.threadId))
             {
                 TraceRes res = new TraceRes();
@@ -82,14 +79,13 @@ namespace TracerResources
             Node curr = nextStepList.startNode;
             while (curr != null)
             {
-                bool isFirst = true;
                 String currName = curr.result.methodName;
                 Node currMainList = list.startNode;
                 while (currMainList != null)
                 {
-                    if (String.Compare(currMainList.result.parentName, currName) == 0 || (currMainList.result.threadId == curr.result.threadId && curr.result.isTreadNode))
+                    if (String.Compare(currMainList.result.parentName, currName) == 0 ||
+                        (currMainList.result.threadId == curr.result.threadId && curr.result.isTreadNode))
                     {
-                        isFirst = false;
                         list.startNode.childrenCount++;
                         curr.children.Insert(currMainList.result);
                     }
@@ -111,35 +107,68 @@ namespace TracerResources
             }
             return 0;
         }
-        
-        
-        private int k = 0;
-        public int printChilds(Node start)
-        {
 
+        public void ordThreadList()
+        {
+            // threadList.startNode.children.startNode = list.startNode;
+            HashSet<int> set = new HashSet<int>();
+            Node curr = list.startNode;
+            Node currBuf = list.startNode;
+            Node currThread = threadList.startNode;
+            while (curr != null)
+            {
+                if (!set.Contains(curr.result.threadId) && curr.result.threadId == currThread.result.threadId)
+                {
+                    if (currThread.children.startNode == null)
+                    {
+                        currThread.children.startNode = curr;
+                        // currThread.children.startNode.next = null;
+                        // curr = currBuf;
+                    }
+                    else
+                    {
+                        currThread.children.currentNode = curr;
+                        // currThread.children.currentNode.next = null;
+                    }
+
+                    // currThread.children.Insert(curr.result);
+                    currThread = currThread.next;
+                    set.Add(curr.result.threadId);
+                }
+                curr = curr.next;
+            }
+
+            currThread = threadList.startNode;
+            while (currThread != null)
+            {
+                currThread.children.startNode.next = null;
+                currThread = currThread.next;
+            }
+        }
+
+        public int printChilds(Node start, int level)
+        {
             String buf = "";
 
             Node curr = start;
+            for (int i = 0; i < level; i++)
+            {
+                buf += "      ";
+            }
             while (curr != null)
             {
-                for (int i = 0; i < k; i++)
-                {
-                    buf += "      ";
-                }
+
                 Console.WriteLine(buf + "Time - " + curr.result.time);
                 Console.WriteLine(buf + "Method - " + curr.result.methodName);
-                Console.WriteLine(buf + "Parent Method - " + curr.result.parentName);
                 Console.WriteLine(buf + "Class - " + curr.result.className + "\n");
+
                 if (curr.children != null)
                 {
-                    k++;
-                    printChilds(curr.children.startNode);
+                    level++;
+                    printChilds(curr.children.startNode, level);
                 }
-                k--;
                 curr = curr.next;
             }
-            k--;
-            // k = 0;
             return 0;
         }
 
@@ -160,6 +189,15 @@ namespace TracerResources
                 currThread.result.time = currThread.children.startNode.result.time;
                 currThread = currThread.next;
             }
+        }
+
+        public void GetResult()
+        {
+            this.ordinate(this.list);
+            this.ordThreadList();
+            this.countThreadTime();
+            this.printChilds(this.threadList.startNode, 0);
+            this.serialize();
         }
     }
 }

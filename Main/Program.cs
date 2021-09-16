@@ -46,10 +46,6 @@ class Program
         Thread thread = new Thread(justAFunc);
         thread.Start();
         tracer.StopHeadTrace();
-        tracer.ordinate(tracer.threadList);
-        tracer.countThreadTime();
-        tracer.printChilds(tracer.threadList.startNode);
-        tracer.serialize();
-        
+        tracer.GetResult();
     }
 }

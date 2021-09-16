@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<List xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <startNode>
+    <result>
+      <time>16.5339</time>
+      <threadId>1</threadId>
+    </result>
+    <next>
+      <result>
+        <time>0.2813</time>
+        <threadId>4</threadId>
+      </result>
+      <children>
+        <startNode>
+          <result>
+            <methodName>justAFunc</methodName>
+            <className>Program</className>
+            <time>0.2813</time>
+            <threadId>4</threadId>
+          </result>
+          <children />
+        </startNode>
+      </children>
+    </next>
+    <children>
+      <startNode>
+        <result>
+          <methodName>Main</methodName>
+          <className>Program</className>
+          <time>16.5339</time>
+          <threadId>1</threadId>
+        </result>
+        <children>
+          <startNode>
+            <result>
+              <methodName>getSum</methodName>
+              <className>Program</className>
+              <time>1.2876</time>
+              <threadId>1</threadId>
+            </result>
+            <next>
+              <result>
+                <methodName>getDif</methodName>
+                <className>Program</className>
+                <time>0.1288</time>
+                <threadId>1</threadId>
+              </result>
+              <children />
+            </next>
+            <children>
+              <startNode>
+                <result>
+                  <methodName>getMult</methodName>
+                  <className>Program</className>
+                  <time>1.0651</time>
+                  <threadId>1</threadId>
+                </result>
+                <children />
+              </startNode>
+            </children>
+          </startNode>
+        </children>
+      </startNode>
+    </children>
+  </startNode>
+</List>
