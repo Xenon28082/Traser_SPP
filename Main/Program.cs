@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using TracerResources;
 
 class Program
@@ -33,7 +34,6 @@ class Program
     {
         tracer.StartTrace();
         int result = x - y;
-        justAFunc();
         tracer.StopTrace();
         return result;
     }
@@ -43,8 +43,13 @@ class Program
         tracer.StartTrace();
         getSum(3, 5);
         getDif(5, 3);
+        Thread thread = new Thread(justAFunc);
+        thread.Start();
         tracer.StopHeadTrace();
-        tracer.ordinate(tracer.list);
-        tracer.printChilds(tracer.list.startNode);
+        tracer.ordinate(tracer.threadList);
+        tracer.countThreadTime();
+        tracer.printChilds(tracer.threadList.startNode);
+        tracer.serialize();
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace TracerResources
 {
@@ -7,6 +8,7 @@ namespace TracerResources
         public TraceRes result;
         public Node next;
         public List children;
+        [XmlIgnore]
         public int childrenCount;
         public Node()
         {

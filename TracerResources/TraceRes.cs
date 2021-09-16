@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace TracerResources
 {
@@ -7,14 +8,20 @@ namespace TracerResources
         public String methodName;
         public String className;
         public double time;
-        public DateTime start;
-        public String parentName;
         
+        [XmlIgnore]
+        public DateTime start;
+        [XmlIgnore]
+        public String parentName;
+        public int threadId;
+        [XmlIgnore]
+        public bool isTreadNode;
         public TraceRes()
         {
             parentName = "first";
             methodName = null;
             className = null;
+            isTreadNode = false;
         }
     }
 }

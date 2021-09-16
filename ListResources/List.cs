@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace TracerResources
 {
     public class List
     {
         public Node startNode;
+        [XmlIgnore]
         public Node currentNode;
+        [XmlIgnore]
         public int size;
 
         public HashSet<String> parentNames;

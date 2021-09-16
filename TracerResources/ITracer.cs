@@ -5,7 +5,6 @@
         void StartTrace();
 
         void StopTrace();
-
-        void GetTraceResult();
+        
     }
 }
